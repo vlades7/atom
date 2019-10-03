@@ -9,7 +9,7 @@ public class Util {
 
     public static void main(String[] args) {
         int[] myArray = {1, 2, 3};
-        System.out.println("max: " + max(myArray));
+        System.out.println("max!: " + max(myArray));
         System.out.println("sum: " + max(myArray));
         System.out.println(getHelloWorld());
     }
