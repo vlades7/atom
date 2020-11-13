@@ -99,7 +99,8 @@ public class ChatClient {
         MediaType mediaType = MediaType.parse("application/x-www-form-urlencoded");
         Request request = new Request.Builder()
                 .post(RequestBody.create(mediaType, ""))
-                .url(PROTOCOL + HOST + PORT + "/chat/admin/kick?adminname=" + adminName + "&password=" + password + "&kickname=" + kickName)
+                .url(PROTOCOL + HOST + PORT + "/chat/admin/kick?adminname=" + adminName + "&password="
+                        + password + "&kickname=" + kickName)
                 .build();
 
         return client.newCall(request).execute();
@@ -111,7 +112,8 @@ public class ChatClient {
         MediaType mediaType = MediaType.parse("application/x-www-form-urlencoded");
         Request request = new Request.Builder()
                 .post(RequestBody.create(mediaType, ""))
-                .url(PROTOCOL + HOST + PORT + "/chat/admin/ban?adminname=" + adminName + "&password=" + password + "&banname=" + banName)
+                .url(PROTOCOL + HOST + PORT + "/chat/admin/ban?adminname=" + adminName + "&password="
+                        + password + "&banname=" + banName)
                 .build();
 
         return client.newCall(request).execute();

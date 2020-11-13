@@ -10,14 +10,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.math.BigInteger;
+import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Map;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.stream.Collectors;
-
-import java.security.MessageDigest;
 
 @Controller
 @RequestMapping("chat")
@@ -40,7 +39,7 @@ public class ChatController {
             consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<String> signup(@RequestParam("name") String name,
-                                        @RequestParam("password") String password) {
+                                         @RequestParam("password") String password) {
         if (name.length() < 1) {
             return ResponseEntity.badRequest().body("Too short name.");
         }
@@ -107,7 +106,8 @@ public class ChatController {
             method = RequestMethod.GET,
             produces = MediaType.TEXT_PLAIN_VALUE)
     public ResponseEntity online() {
-        String responseBody = String.join("\n", usersOnline.keySet().stream().sorted().collect(Collectors.toList()));
+        String responseBody = String.join("\n", usersOnline.keySet().stream()
+                .sorted().collect(Collectors.toList()));
 
         return ResponseEntity.ok(responseBody);
     }
@@ -120,7 +120,8 @@ public class ChatController {
             method = RequestMethod.GET,
             produces = MediaType.TEXT_PLAIN_VALUE)
     public ResponseEntity allUsers() {
-        String responseBody = String.join("\n", registeredUsers.keySet().stream().sorted().collect(Collectors.toList()));
+        String responseBody = String.join("\n", registeredUsers.keySet().stream()
+                .sorted().collect(Collectors.toList()));
 
         return ResponseEntity.ok(responseBody);
     }
@@ -218,15 +219,13 @@ public class ChatController {
             method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public ResponseEntity adminBan(@RequestParam("adminname") String adminName,
-                                    @RequestParam("password") String password,
-                                    @RequestParam("banname") String banName) {
+                                   @RequestParam("password") String password,
+                                   @RequestParam("banname") String banName) {
         if ((!adminName.equals("admin")) || (!getSha256(password).equals(adminPassword))) {
             return ResponseEntity.badRequest().body("Incorrect Admin password.");
         }
 
-        if (usersOnline.containsKey(banName)) {
-            usersOnline.remove(banName);
-        }
+        usersOnline.remove(banName);
 
         if (!registeredUsers.containsKey(banName)) {
             return ResponseEntity.badRequest().body("[" + banName + "] doesn't exists");
