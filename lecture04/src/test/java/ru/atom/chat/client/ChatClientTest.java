@@ -28,8 +28,8 @@ public class ChatClientTest {
         System.out.println("[" + response + "]");
         String body = response.body().string();
         System.out.println();
-        Assert.assertTrue(response.code() == 200 ||
-                body.equals("This user already exists"));
+        Assert.assertTrue(response.code() == 200
+                || body.equals("This user already exists"));
     }
 
     @Test
@@ -39,9 +39,9 @@ public class ChatClientTest {
         System.out.println("[" + response + "]");
         String body = response.body().string();
         System.out.println();
-        Assert.assertTrue(response.code() == 200 ||
-                body.equals("Already logged in.") ||
-                body.equals("This user doesn't exists"));
+        Assert.assertTrue(response.code() == 200
+                || body.equals("This user doesn't exists")
+                || body.equals("Already logged in."));
     }
 
     @Test
